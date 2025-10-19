@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/authContext';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const List = () => {
 
   const {user} = useAuth();
-  const [leaves, setLeaves] = useState([])
+  const [leaves, setLeaves] = useState(null)
   let sno = 1;
+  const {id} = useParams()
 
   const fetchLeaves = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/leave/${user._id}`, {
+      const response = await axios.get(`http://localhost:3000/api/leave/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -30,13 +32,17 @@ const List = () => {
     fetchLeaves();
   }, []);
 
+  if(!leaves){
+    return <div>Loading...</div>
+  }
   return (
     <div className='p-6 max-w-6xl mx-auto'>
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-gray-800">Manage Leaves</h3>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+      {user.role === 'employee' && (
+        <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
         <input
           type="text"
           placeholder="Search by Emp Name"
@@ -49,7 +55,11 @@ const List = () => {
         >
           Add New Leave
         </Link>
+        
+        
       </div>
+      )}
+      
 
       <div className="overflow-x-auto">
         <table className="min-w-full text-left border border-gray-200 rounded-md">

@@ -20,6 +20,8 @@ import Summary from './components/EmployeeDashboard/Summary'
 import LeaveList from './components/leave/List'
 import AddLeave from './components/leave/Add'
 import Setting from './components/EmployeeDashboard/Setting'
+import Table from './components/leave/Table'
+import LeaveDetail from './components/leave/Detail'
 const App = () => {
   return (
     <BrowserRouter>
@@ -50,6 +52,13 @@ const App = () => {
 
             <Route path='/admin-dashboard/salary/add' element = {<AddSalary />}></Route>
 
+            <Route path='/admin-dashboard/leaves' element = {<Table />}></Route>
+            <Route path='/admin-dashboard/leaves/:id' element = {<LeaveDetail />}></Route>
+            <Route path='/admin-dashboard/employees/leaves/:id' element = {<LeaveList  />}></Route>
+
+
+            <Route path='/admin-dashboard/setting' element = {<Setting />}></Route>
+
           </Route>
           <Route path='/employee-dashboard' element = {
             
@@ -62,7 +71,7 @@ const App = () => {
             }>
               <Route index element = {<Summary />}></Route>
               <Route path='/employee-dashboard/profile/:id' element = {<View />}></Route>
-              <Route path='/employee-dashboard/leaves' element = {<LeaveList />}></Route>
+              <Route path='/employee-dashboard/leaves/:id' element = {<LeaveList />}></Route>
               <Route path='/employee-dashboard/add-leave' element = {<AddLeave />}></Route>
               <Route path='/employee-dashboard/salary/:id' element = {<ViewSalary />}></Route>
               <Route path='/employee-dashboard/setting' element = {<Setting />}></Route>
